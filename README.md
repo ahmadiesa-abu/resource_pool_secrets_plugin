@@ -1,0 +1,1 @@
+# resource_pool_secrets_plugin
