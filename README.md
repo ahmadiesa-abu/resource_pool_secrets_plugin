@@ -1,5 +1,5 @@
-# resource_pool_plugin
-A plugin that uses API request with resource_pool_server to allocate_ip/unallocate_ip for a node to install cloudify agent
+# resource_pool_secrets_plugin
+A plugin that uses cfy secrets to allocate_ip/unallocate_ip for a node to install cloudify agent
 
 
 **Note: before using any cfy command we must check if we set the profile first
@@ -51,13 +51,7 @@ and we can get the name using the following command ``` cfy plugins list ```
 Plugin Testing Steps:
 ---------------------
 
-before testing the plugin we need to check the servers on the openstack if they are up and what is their ips and call a script to add them to python server
-
-to configure python server please visit the following link
-
-```
-https://github.com/Cloudify-PS/resource_pool_server
-```
+before testing the plugin we need to check the servers on the openstack if they are up and what is their ips and call a script to add them to cfy secrets resource
 
 using the following script : ``` add_sample_data.py ``` 
 
