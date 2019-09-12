@@ -1,0 +1,69 @@
+tosca_definitions_version: cloudify_dsl_1_3
+
+imports:
+  - http://www.getcloudify.org/spec/cloudify/4.6/types.yaml
+  - https://raw.githubusercontent.com/Cloudify-PS/resource_pool_plugin/resource_pool_plugin_setup/plugin.yaml?token=AMVW67NFB64TOCJVKDB47MC5QEQFA
+  
+inputs:
+  manager_host_ip:
+    description: manager host ip that hold the secret value
+    type: string
+  manager_tenant:
+    description: manager host cfy tenant that hold the secret value
+    type: string
+  manager_username:
+    description: manager host cfy username that hold the secret value
+    type: string
+  manager_password:
+    description: manager host cfy password that hold the secret value
+    type: string
+  ip_pool_id:
+    description: pool_id that was added to the python app
+    type: string
+
+
+node_types:
+  cloudify.nodes.resource_pool.Server:
+    derived_from: cloudify.nodes.Compute
+    properties:
+      ip:
+        default: ''
+    interfaces:
+      cloudify.interfaces.lifecycle:
+        create:
+          implementation: resource_pool.plugin.tasks.allocate_ip
+          inputs:
+            manager_host:
+              default: { get_input: manager_host_ip }
+            manager_tenant:
+              default: { get_input: manager_tenant }
+            manager_username:
+              default: { get_input: manager_username }
+            manager_password:
+              default: { get_input: manager_password }
+            pool_id:
+              default: { get_input: ip_pool_id }
+        delete:
+          implementation: resource_pool.plugin.tasks.unallocate_ip
+          inputs:
+            manager_host:
+              default: { get_input: manager_host_ip }
+            manager_tenant:
+              default: { get_input: manager_tenant }
+            manager_username:
+              default: { get_input: manager_username }
+            manager_password:
+              default: { get_input: manager_password }
+            pool_id:
+              default: { get_input: ip_pool_id }
+            resource_id:
+              default:  { get_attribute : [SELF, ip_id] }
+
+node_templates:
+
+  test_host:
+    type: cloudify.nodes.resource_pool.Server
+    properties:
+      agent_config:
+        user: ubuntu
+        key: { get_secret: agent_key_private}

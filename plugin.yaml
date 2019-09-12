@@ -1,0 +1,6 @@
+plugins:
+  resource_pool:
+    executor: central_deployment_agent
+    source: /Cloudify-PS/resource_pool_plugin/archive/resource_pool_plugin_setup.zip
+    package_name: resource_pool_plugin
+    package_version: '0.1'
