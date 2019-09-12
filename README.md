@@ -62,5 +62,5 @@ we can test the plugin using the following command :
 navigate to plugin directory
 
 ```
-cfy install ./test_plugin.yaml -d resource-pool-plugin-test-deployment -b resource-pool-plugin-blueprint -i python_host_ip= [python host from outputs] -i python_host_port= 5000 -i ip_pool_id= [the id of pool passed to add_sample_data.py]
+cfy install ./test_plugin.yaml -d resource-pool-plugin-test-deployment -b resource-pool-plugin-blueprint -i python_host_ip= [python host from outputs] -i ip_pool_id= [the id of pool passed to add_sample_data.py]
 ```
