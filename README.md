@@ -11,17 +11,15 @@ cfy profiles use [cloudify_server_ip] -u [cloudify_username] -p [cloudify_passwo
 
 Installation Steps to Simulate the Environment:
 ------------------------------------------------
-in order to create the environment that will hold 4 servers one of which will be the python server that will have the API for pool and resource managment
+in order to create the environment that will hold 3 servers 
 and that is done by using the ``` openstack_server_create_blueprint ``` and make sure that the deployment of ``` openstack-example-network ``` is installed on the environment
-and since the lab can't hold the 4 servers you have to create a special flavor on openstack :
-``` [1 vcpu , 2GB ram, 12GB root_disk] ``` and provide the id as an input to the blueprint 
 
 using the following command :
 
 navigate the plugin direcoty 
 
 ```
-cfy install ./openstack_server_create_blueprint/openstack-resource-pool-env-setup.yaml -d resource-pool-deployment -b resource-pool-blueprint -i flavor= [id for the created flavor on openstack from the above] 
+cfy install ./openstack_server_create_blueprint/openstack-resource-pool-env-setup.yaml -d resource-pool-deployment -b resource-pool-blueprint 
 ```
 
 Plugin Installation Steps:
