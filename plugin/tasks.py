@@ -8,8 +8,6 @@ from cloudify import ctx
 from cloudify.decorators import operation
 from cloudify.exceptions import NonRecoverableError
 
-from cloudify_rest_client import CloudifyClient
-
 
 def get_secret(manager_host,tenant_name,manager_username,manager_password,secret_name,**kwargs):
     value = None
@@ -58,8 +56,7 @@ def allocate_ip(manager_host,manager_tenant,manager_username,manager_password,po
                     ctx.instance.runtime_properties['ip'] = ip_to_allocate   
                     ctx.instance.runtime_properties['ip_id'] = ip['id']
                     ctx.logger.info('ip {} is allocated'.format(ip_to_allocate))
-                    secret['value']=json.dumps(ip_addresses)
-                    #secret=json.dumps(secret)
+                    secret=json.dumps(ip_addresses)
                     break;
         if ip_to_allocate == '':
             raise NonRecoverableError('no ips found to allocate')
@@ -88,8 +85,7 @@ def unallocate_ip(manager_host,manager_tenant,manager_username,manager_password,
                     ip['status']='RELEASED'
                     ip_to_release=ip['ip_address']
                     ctx.logger.info('ip {} is released'.format(ip_to_release))
-                    secret['value']=json.dumps(ip_addresses)
-                    #secret=json.dumps(secret)
+                    secret=json.dumps(ip_addresses)
                     break;
         if ip_to_release == '':
             raise NonRecoverableError('no id mapped to ip to release')
