@@ -8,6 +8,9 @@ from cloudify import ctx
 from cloudify.decorators import operation
 from cloudify.exceptions import NonRecoverableError
 
+from cloudify_rest_client import CloudifyClient
+
+
 def get_secret(manager_host,tenant_name,manager_username,manager_password,secret_name,**kwargs):
     value = None
     try:
@@ -18,9 +21,11 @@ def get_secret(manager_host,tenant_name,manager_username,manager_password,secret
     except Exception as e:
         raise NonRecoverableError('Exception happned {}'.format(getattr(e, 'message', repr(e))))
     return value;
+    
 
 def update_secret(manager_host,tenant_name,manager_username,manager_password,secret_name,secret_value,**kwargs):
     try:
+        ctx.logger.debug('secret {} content {}'.format(secret_name,secret_value))
         resp = requests.patch('http://'+manager_host+'/api/v3.1/secrets/'+secret_name,
                             json.dumps(dict(
                             value = secret_value,
