@@ -41,7 +41,7 @@ def allocate_ip(manager_host,tenant_name,manager_username,manager_password,pool_
         return;
     try:
         secret = get_secret(manager_host,tenant_name,manager_username,manager_password,pool_id)
-        if Not secret:
+        if not secret:
             ip_to_allocate=''
             ip_addresses = json.loads(secret['value'])
             for ip in ip_addresses:
@@ -73,7 +73,7 @@ def unallocate_ip(manager_host,tenant_name,manager_username,manager_password,poo
         return;
     try:
         secret = get_secret(manager_host,tenant_name,manager_username,manager_password,pool_id)
-        if Not secret:
+        if not secret:
             ip_to_releasee=''
             ip_addresses = json.loads(secret['value'])
             for ip in ip_addresses:
