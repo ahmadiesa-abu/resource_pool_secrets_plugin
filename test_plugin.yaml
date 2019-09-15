@@ -2,7 +2,7 @@ tosca_definitions_version: cloudify_dsl_1_3
 
 imports:
   - http://www.getcloudify.org/spec/cloudify/4.6/types.yaml
-  - https://raw.githubusercontent.com/Cloudify-PS/resource_pool_plugin/resource_pool_plugin_setup/plugin.yaml?token=AMVW67NFB64TOCJVKDB47MC5QEQFA
+  - https://raw.githubusercontent.com/ahmadiesa-abu/resource_pool_secrets_plugin/master/plugin.yaml?token=AMVW67PR7SBBZ7TPDO4G43S5PYHSS
   
 inputs:
   manager_host_ip:
