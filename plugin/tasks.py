@@ -23,7 +23,7 @@ def get_secret(manager_host,tenant_name,manager_username,manager_password,secret
         '''
         client = get_rest_client()
         value = client.secrets.get(key=secret_name)
-        ctx.logger.debug('response content {}'.format(value))
+        ctx.logger.debug('#response content {}'.format(value))
 
     except Exception as e:
         raise NonRecoverableError('Exception happned {}'.format(getattr(e, 'message', repr(e))))
@@ -47,7 +47,7 @@ def update_secret(manager_host,tenant_name,manager_username,manager_password,sec
         '''
         client = get_rest_client()
         value = client.secrets.update(key=secret_name,value=secret_value,visibility = 'tenant',is_hidden_value = False)
-        ctx.logger.debug('response content {}'.format(value))
+        ctx.logger.debug('##response content {}'.format(value))
     except Exception as e:
         raise NonRecoverableError('Exception happned {}'.format(getattr(e, 'message', repr(e))))
 
