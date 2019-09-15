@@ -8,7 +8,7 @@ from cloudify import ctx
 from cloudify.decorators import operation
 from cloudify.exceptions import NonRecoverableError
 
-def get_secret(manager_host,tenant_name,manager_username,manager_password,secret_name):
+def get_secret(manager_host,tenant_name,manager_username,manager_password,secret_name,**kwargs):
     value = None
     try:
         resp = requests.get('http://'+manager_host+'/api/v3.1/secrets/'+secret_name,
@@ -19,7 +19,7 @@ def get_secret(manager_host,tenant_name,manager_username,manager_password,secret
         raise NonRecoverableError('Exception happned {}'.format(getattr(e, 'message', repr(e))))
     return value;
 
-def update_secret(manager_host,tenant_name,manager_username,manager_password,secret_name,secret_value):
+def update_secret(manager_host,tenant_name,manager_username,manager_password,secret_name,secret_value,**kwargs):
     try:
         resp = requests.patch('http://'+manager_host+'/api/v3.1/secrets/'+secret_name,
                             json.dumps(dict(
@@ -40,7 +40,7 @@ def allocate_ip(manager_host,manager_tenant,manager_username,manager_password,po
         ctx.logger.error('pool_id was not provided')
         return;
     try:
-        secret = get_secret(manager_host,manager_tenant,manager_username,manager_password,pool_id)
+        secret = get_secret(manager_host,manager_tenant,manager_username,manager_password,pool_id,&kwargs)
         ip_to_allocate=''
         if not secret:
             ip_addresses = json.loads(secret['value'])
@@ -58,7 +58,7 @@ def allocate_ip(manager_host,manager_tenant,manager_username,manager_password,po
         if ip_to_allocate == '':
             raise NonRecoverableError('no ips found to allocate')
         else:
-            update_secret(manager_host,tenant_name,manager_username,manager_password,pool_id,secret)
+            update_secret(manager_host,tenant_name,manager_username,manager_password,pool_id,secret,&kwargs)
     except Exception as e:
         raise NonRecoverableError('Exception happned {}'.format(getattr(e, 'message', repr(e))))
 
@@ -72,7 +72,7 @@ def unallocate_ip(manager_host,manager_tenant,manager_username,manager_password,
         ctx.logger.error('resource_id was not provided')
         return;
     try:
-        secret = get_secret(manager_host,manager_tenant,manager_username,manager_password,pool_id)
+        secret = get_secret(manager_host,manager_tenant,manager_username,manager_password,pool_id,&kwargs)
         ip_to_release=''
         if not secret:
             ip_addresses = json.loads(secret['value'])
@@ -87,6 +87,6 @@ def unallocate_ip(manager_host,manager_tenant,manager_username,manager_password,
         if ip_to_release == '':
             raise NonRecoverableError('no id mapped to ip to release')
         else:
-            update_secret(manager_host,tenant_name,manager_username,manager_password,pool_id,secret)
+            update_secret(manager_host,tenant_name,manager_username,manager_password,pool_id,secret,&kwargs)
     except Exception as e:
         raise NonRecoverableError('Exception happned {}'.format(getattr(e, 'message', repr(e))))
