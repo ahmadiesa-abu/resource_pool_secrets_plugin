@@ -51,7 +51,7 @@ def allocate_ip(manager_host,manager_tenant,manager_username,manager_password,po
                     ip['status']='ALLOCATED'
                     ip_to_allocate=ip['ip_address']
                     ctx.instance.runtime_properties['ip'] = ip_to_allocate   
-                    ctx.instance.runtime_properties['ip_id'] = result['id']
+                    ctx.instance.runtime_properties['ip_id'] = ip['id']
                     ctx.logger.info('ip {} is allocated'.format(ip_to_allocate))
                     secret['value']=ip_addresses
                     secret=json.loads(secret)
@@ -75,7 +75,7 @@ def unallocate_ip(manager_host,manager_tenant,manager_username,manager_password,
     try:
         secret = get_secret(manager_host,manager_tenant,manager_username,manager_password,pool_id)
         ip_to_release=''
-        if not secret:
+        if secret:
             ip_addresses = json.loads(secret['value'])
             for ip in ip_addresses:
                 if ip['id']==resource_id:
