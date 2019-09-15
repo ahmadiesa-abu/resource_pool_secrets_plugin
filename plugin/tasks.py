@@ -40,7 +40,7 @@ def allocate_ip(manager_host,manager_tenant,manager_username,manager_password,po
         ctx.logger.error('pool_id was not provided')
         return;
     try:
-        secret = get_secret(manager_host,tenant_name,manager_username,manager_password,pool_id)
+        secret = get_secret(manager_host,manager_tenant,manager_username,manager_password,pool_id)
         if not secret:
             ip_to_allocate=''
             ip_addresses = json.loads(secret['value'])
@@ -72,7 +72,7 @@ def unallocate_ip(manager_host,manager_tenant,manager_username,manager_password,
         ctx.logger.error('resource_id was not provided')
         return;
     try:
-        secret = get_secret(manager_host,tenant_name,manager_username,manager_password,pool_id)
+        secret = get_secret(manager_host,manager_tenant,manager_username,manager_password,pool_id)
         if not secret:
             ip_to_releasee=''
             ip_addresses = json.loads(secret['value'])
