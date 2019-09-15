@@ -41,6 +41,7 @@ def allocate_ip(manager_host,manager_tenant,manager_username,manager_password,po
         return;
     try:
         secret = get_secret(manager_host,manager_tenant,manager_username,manager_password,pool_id)
+        ctx.logger.debug('secret value {}'.format(secret))
         ip_to_allocate=''
         if not secret:
             ip_addresses = json.loads(secret['value'])
