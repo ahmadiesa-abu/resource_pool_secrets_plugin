@@ -48,7 +48,6 @@ def allocate_ip(manager_host,manager_tenant,manager_username,manager_password,po
                 if ip['status']=='RELEASED':
                     ip['status']='ALLOCATED'
                     ip_to_allocate=ip['ip_address']
-                    ip_to_allocate=result['ip_address']
                     ctx.instance.runtime_properties['ip'] = ip_to_allocate   
                     ctx.instance.runtime_properties['ip_id'] = result['id']
                     ctx.logger.info('ip {} is allocated'.format(ip_to_allocate))
