@@ -59,6 +59,7 @@ def allocate_ip(manager_host,manager_tenant,manager_username,manager_password,po
         if ip_to_allocate == '':
             raise NonRecoverableError('no ips found to allocate')
         else:
+            ctx.logger.debug('after allocate secret value {}'.format(secret))
             update_secret(manager_host,tenant_name,manager_username,manager_password,pool_id,secret)
     except Exception as e:
         raise NonRecoverableError('Exception happned {}'.format(getattr(e, 'message', repr(e))))
