@@ -6,16 +6,23 @@ from cloudify import ctx
 
 # put the operation decorator on any function that is a task
 from cloudify.decorators import operation
-from cloudify.exceptions import NonRecoverableError
+#from cloudify.exceptions import NonRecoverableError
+
 
 
 def get_secret(manager_host,tenant_name,manager_username,manager_password,secret_name,**kwargs):
     value = None
     try:
+        '''
         resp = requests.get('http://'+manager_host+'/api/v3.1/secrets/'+secret_name,
                             headers={'Tenant':tenant_name},auth=(manager_username, manager_password))
         ctx.logger.debug('response content {}'.format(resp.content))
         value = json.loads(resp.content)
+        '''
+        client = get_rest_client()
+        value = client.secrets.get(key=secret_name)
+        ctx.logger.debug('response content {}'.format(value))
+
     except Exception as e:
         raise NonRecoverableError('Exception happned {}'.format(getattr(e, 'message', repr(e))))
     return value;
@@ -24,6 +31,7 @@ def get_secret(manager_host,tenant_name,manager_username,manager_password,secret
 def update_secret(manager_host,tenant_name,manager_username,manager_password,secret_name,secret_value,**kwargs):
     try:
         ctx.logger.debug('secret {} content {}'.format(secret_name,secret_value))
+        '''
         resp = requests.patch('http://'+manager_host+'/api/v3.1/secrets/'+secret_name,
                             json.dumps(dict(
                             value = secret_value,
@@ -34,6 +42,10 @@ def update_secret(manager_host,tenant_name,manager_username,manager_password,sec
         ctx.logger.debug('response content {}'.format(resp.content))
         if resp.status_code==200:
             ctx.logger.info('secret was updated successfully')
+        '''
+        client = get_rest_client()
+        value = client.secrets.update(key=secret_name,secret_value,visibility = 'tenant',is_hidden_value = False)
+        ctx.logger.debug('response content {}'.format(value))
     except Exception as e:
         raise NonRecoverableError('Exception happned {}'.format(getattr(e, 'message', repr(e))))
 
