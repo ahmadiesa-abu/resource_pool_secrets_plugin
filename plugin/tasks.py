@@ -44,6 +44,7 @@ def allocate_ip(manager_host,manager_tenant,manager_username,manager_password,po
         ip_to_allocate=''
         if not secret:
             ip_addresses = json.loads(secret['value'])
+            ctx.logger.info('ip_addresses {} '.format(ip_addresses))
             for ip in ip_addresses:
                 if ip['status']=='RELEASED':
                     ip['status']='ALLOCATED'
