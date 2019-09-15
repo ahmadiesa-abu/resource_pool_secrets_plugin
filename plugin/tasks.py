@@ -58,8 +58,8 @@ def allocate_ip(manager_host,manager_tenant,manager_username,manager_password,po
                     ctx.instance.runtime_properties['ip'] = ip_to_allocate   
                     ctx.instance.runtime_properties['ip_id'] = ip['id']
                     ctx.logger.info('ip {} is allocated'.format(ip_to_allocate))
-                    secret['value']=ip_addresses
-                    secret=json.loads(secret)
+                    secret['value']=json_dumps(ip_addresses)
+                    secret=json.dumps(secret)
                     break;
         if ip_to_allocate == '':
             raise NonRecoverableError('no ips found to allocate')
@@ -88,8 +88,8 @@ def unallocate_ip(manager_host,manager_tenant,manager_username,manager_password,
                     ip['status']='RELEASED'
                     ip_to_release=ip['ip_address']
                     ctx.logger.info('ip {} is released'.format(ip_to_release))
-                    secret['value']=ip_addresses
-                    secret=json.loads(secret)
+                    secret['value']=json_dumps(ip_addresses)
+                    secret=json.dumps(secret)
                     break;
         if ip_to_release == '':
             raise NonRecoverableError('no id mapped to ip to release')
