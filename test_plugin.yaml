@@ -18,7 +18,7 @@ inputs:
     description: manager host cfy password that hold the secret value
     type: string
   ip_pool_id:
-    description: pool_id that was added to the python app
+    description: pool_id that was added to the cfy secrets resource
     type: string
 
 
@@ -31,7 +31,7 @@ node_types:
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
-          implementation: resource_pool.plugin.tasks.allocate_ip
+          implementation: resource_pool_secrets.plugin.tasks.allocate_ip
           inputs:
             manager_host:
               default: { get_input: manager_host_ip }
@@ -44,7 +44,7 @@ node_types:
             pool_id:
               default: { get_input: ip_pool_id }
         delete:
-          implementation: resource_pool.plugin.tasks.unallocate_ip
+          implementation: resource_pool_secrets.plugin.tasks.unallocate_ip
           inputs:
             manager_host:
               default: { get_input: manager_host_ip }

@@ -1,6 +1,6 @@
 plugins:
-  resource_pool:
+  resource_pool_secrets:
     executor: central_deployment_agent
-    source: /Cloudify-PS/resource_pool_plugin/archive/resource_pool_plugin_setup.zip
-    package_name: resource_pool_plugin
+    source: https://github.com/ahmadiesa-abu/resource_pool_secrets_plugin/archive/master.zip
+    package_name: resource_pool_secrets_plugin
     package_version: '0.1'
