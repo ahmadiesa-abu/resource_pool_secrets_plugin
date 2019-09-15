@@ -32,7 +32,7 @@ inputs:
   flavor:
     description: >
       An Openstack Flavor ID.
-    default: ''
+    default: '2'
 
   manager_network:
     default: external
@@ -112,16 +112,6 @@ node_templates:
           external_resource: external
         reexecute: false
 
-  python_host:
-    type: nodes.Server
-    properties:
-      openstack_config: *openstack_config
-    relationships:
-      - target: python_host_port
-        type: cloudify.openstack.server_connected_to_port
-      - type: cloudify.relationships.depends_on
-        target: cloudify_host_cloud_config
-
   first_host:
     type: nodes.Server
     properties:
@@ -151,31 +141,6 @@ node_templates:
         type: cloudify.openstack.server_connected_to_port
       - type: cloudify.relationships.depends_on
         target: cloudify_host_cloud_config
-
-
-  python_floating_ip:
-    type: cloudify.openstack.nodes.FloatingIP
-    properties:
-      openstack_config: *openstack_config
-      floatingip:
-        floating_network_id: { get_attribute: [ openstack, deployment, outputs, external_network ] }
-    relationships:
-    - type: cloudify.relationships.contained_in
-      target: openstack
-
-  python_host_port:
-    type: cloudify.openstack.nodes.Port
-    properties:
-      openstack_config: *openstack_config
-    relationships:
-      - type: cloudify.relationships.contained_in
-        target: public_network
-      - type: cloudify.relationships.depends_on
-        target: public_subnet
-      - type: cloudify.openstack.port_connected_to_security_group
-        target: security_group
-      - type: cloudify.openstack.port_connected_to_floating_ip
-        target: python_floating_ip
 
   first_floating_ip:
     type: cloudify.openstack.nodes.FloatingIP
@@ -260,8 +225,6 @@ node_templates:
           port: 22
         - remote_ip_prefix: 0.0.0.0/0
           port: 80
-        - remote_ip_prefix: 0.0.0.0/0
-          port: 5000
 
   public_subnet:
     type: cloudify.openstack.nodes.Subnet
@@ -284,9 +247,6 @@ node_templates:
       target: openstack
 
 outputs:
-  python_host_ip:
-    description: floating ip address for python server
-    value: { get_attribute: [ python_floating_ip, floating_ip_address ] }
 
   first_host_ip:
     description: floating ip address for first server
