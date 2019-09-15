@@ -46,7 +46,7 @@ def update_secret(manager_host,tenant_name,manager_username,manager_password,sec
             ctx.logger.info('secret was updated successfully')
         '''
         client = get_rest_client()
-        value = client.secrets.update(key=secret_name,secret_value,visibility = 'tenant',is_hidden_value = False)
+        value = client.secrets.update(key=secret_name,value=secret_value,visibility = 'tenant',is_hidden_value = False)
         ctx.logger.debug('response content {}'.format(value))
     except Exception as e:
         raise NonRecoverableError('Exception happned {}'.format(getattr(e, 'message', repr(e))))
