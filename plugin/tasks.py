@@ -8,7 +8,7 @@ from cloudify import ctx
 from cloudify.decorators import operation
 from cloudify.exceptions import NonRecoverableError
 
-def get_secret(manager_host,tenant_name,manager_username,mananger_password,secret_name):
+def get_secret(manager_host,tenant_name,manager_username,manager_password,secret_name):
     value = None
     try:
         resp = requests.get('http://'+manager_host+'/api/v3.1/secrets/'+secret_name,
@@ -19,7 +19,7 @@ def get_secret(manager_host,tenant_name,manager_username,mananger_password,secre
         raise NonRecoverableError('Exception happned {}'.format(getattr(e, 'message', repr(e))))
     return value;
 
-def update_secret(manager_host,tenant_name,manager_username,mananger_password,secret_name,secret_value):
+def update_secret(manager_host,tenant_name,manager_username,manager_password,secret_name,secret_value):
     try:
         resp = requests.patch('http://'+manager_host+'/api/v3.1/secrets/'+secret_name,
                             json.dumps(dict(
