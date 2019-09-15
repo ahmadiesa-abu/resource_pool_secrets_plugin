@@ -43,7 +43,7 @@ def allocate_ip(manager_host,manager_tenant,manager_username,manager_password,po
         secret = get_secret(manager_host,manager_tenant,manager_username,manager_password,pool_id)
         ctx.logger.debug('secret value {}'.format(secret))
         ip_to_allocate=''
-        if not secret:
+        if secret:
             ip_addresses = json.loads(secret['value'])
             ctx.logger.info('ip_addresses {} '.format(ip_addresses))
             for ip in ip_addresses:
