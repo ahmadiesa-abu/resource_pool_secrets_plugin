@@ -40,7 +40,7 @@ def allocate_ip(manager_host,manager_tenant,manager_username,manager_password,po
         ctx.logger.error('pool_id was not provided')
         return;
     try:
-        secret = get_secret(manager_host,manager_tenant,manager_username,manager_password,pool_id,kwargs)
+        secret = get_secret(manager_host,manager_tenant,manager_username,manager_password,pool_id)
         ip_to_allocate=''
         if not secret:
             ip_addresses = json.loads(secret['value'])
@@ -58,7 +58,7 @@ def allocate_ip(manager_host,manager_tenant,manager_username,manager_password,po
         if ip_to_allocate == '':
             raise NonRecoverableError('no ips found to allocate')
         else:
-            update_secret(manager_host,tenant_name,manager_username,manager_password,pool_id,secret,kwargs)
+            update_secret(manager_host,tenant_name,manager_username,manager_password,pool_id,secret)
     except Exception as e:
         raise NonRecoverableError('Exception happned {}'.format(getattr(e, 'message', repr(e))))
 
@@ -72,7 +72,7 @@ def unallocate_ip(manager_host,manager_tenant,manager_username,manager_password,
         ctx.logger.error('resource_id was not provided')
         return;
     try:
-        secret = get_secret(manager_host,manager_tenant,manager_username,manager_password,pool_id,kwargs)
+        secret = get_secret(manager_host,manager_tenant,manager_username,manager_password,pool_id)
         ip_to_release=''
         if not secret:
             ip_addresses = json.loads(secret['value'])
@@ -87,6 +87,6 @@ def unallocate_ip(manager_host,manager_tenant,manager_username,manager_password,
         if ip_to_release == '':
             raise NonRecoverableError('no id mapped to ip to release')
         else:
-            update_secret(manager_host,tenant_name,manager_username,manager_password,pool_id,secret,kwargs)
+            update_secret(manager_host,tenant_name,manager_username,manager_password,pool_id,secret)
     except Exception as e:
         raise NonRecoverableError('Exception happned {}'.format(getattr(e, 'message', repr(e))))
