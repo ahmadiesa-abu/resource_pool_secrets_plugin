@@ -6,8 +6,10 @@ from cloudify import ctx
 
 # put the operation decorator on any function that is a task
 from cloudify.decorators import operation
-#from cloudify.exceptions import NonRecoverableError
+from cloudify.exceptions import NonRecoverableError
 
+
+from cloudify.manager import get_rest_client
 
 
 def get_secret(manager_host,tenant_name,manager_username,manager_password,secret_name,**kwargs):
