@@ -35,7 +35,7 @@ def update_secret(manager_host,tenant_name,manager_username,mananger_password,se
         raise NonRecoverableError('Exception happned {}'.format(getattr(e, 'message', repr(e))))
 
 @operation
-def allocate_ip(manager_host,manager_tenant,manager_username,manager_password,pool_id):
+def allocate_ip(manager_host,manager_tenant,manager_username,manager_password,pool_id,**kwargs):
     if pool_id == '':
         ctx.logger.error('pool_id was not provided')
         return;
@@ -64,7 +64,7 @@ def allocate_ip(manager_host,manager_tenant,manager_username,manager_password,po
 
 
 @operation
-def unallocate_ip(manager_host,manager_tenant,manager_username,manager_password,pool_id,resource_id):
+def unallocate_ip(manager_host,manager_tenant,manager_username,manager_password,pool_id,resource_id,**kwargs):
     if pool_id == '':
         ctx.logger.error('pool_id was not provided')
         return;
