@@ -30,7 +30,7 @@ def update_secret(manager_host,tenant_name,manager_username,manager_password,sec
                             json.dumps(dict(
                             value = secret_value,
                             visibility = 'tenant',
-                            is_hidden_value = false
+                            is_hidden_value = False
                             )),headers={'Tenant':tenant_name,'Content-Type':'application/json'},
                             auth=(manager_username, manager_password))
         ctx.logger.debug('response content {}'.format(resp.content))
